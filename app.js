@@ -7,8 +7,14 @@ var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
 var adaro = require('adaro');
 
+// JavaScript files that I have written to handle the various pages
 var index = require('./routes/index');
 var users = require('./routes/users');
+var welcome = require('./routes/welcome');
+
+// JavaScript files that I have written to handle cookies
+var cookieMiddleware = require('./routes/cookie-middleware');
+var cookie = require('./routes/cookie');
 
 var app = express();
 
@@ -17,7 +23,6 @@ app.engine('dust', adaro.dust());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'dust');
 
-// uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -31,8 +36,12 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cookieMiddleware);
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/welcome', welcome);
+app.use('/cookie', cookie);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
