@@ -1,4 +1,5 @@
 var express = require('express');
+var db = require('../db/query');
 var router = express.Router();
 
 /* Cookie middleware. */
@@ -21,6 +22,7 @@ router.use(function(req, res, next) {
         } else {
             res.redirect('/cookie');
         }
+        // If name has not been set forward user to welcome page
     } else {
         // sessionId cookie has been set, allow user to reach webpage
         next();
