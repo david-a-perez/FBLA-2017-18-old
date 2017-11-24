@@ -20,3 +20,11 @@ CREATE TABLE people (
     role role,
     user_cookie text REFERENCES users ON DELETE CASCADE
 );
+
+CREATE TABLE checked_out_books (
+    id serial PRIMARY KEY,
+    book serial REFERENCES books ON DELETE CASCADE,
+    person serial REFERENCES people ON DELETE CASCADE,
+    checkout_timestamp timestamp,
+    user_cookie text REFERENCES users ON DELETE CASCADE
+);
